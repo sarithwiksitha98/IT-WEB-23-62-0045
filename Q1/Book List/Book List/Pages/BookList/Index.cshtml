@@ -1,0 +1,64 @@
+﻿@page
+@model Book_List.Pages.BookList.IndexModel
+
+
+<br />
+<div class="container row p-0 m-0">
+    <div class="col-6">
+        <h2 class="text-info">Student Information</h2>
+    </div>
+    <div class="col-3">
+        <a asp-page="Create" class="btn btn-info form-control text-white">Add Students</a>
+    </div>
+    <div class="col-3">
+        <a asp-page="Upsert" class="btn btn-info form-control text-white">Add Course info</a>
+    </div>
+
+
+    <div class="col-12 border p-3 mt-3">
+        <form method="post">
+            @if (Model.student_Infos.Count() > 0)
+            {
+                <table class="table table-striped border">
+                    <tr class="table-secondary">
+                        <th>
+                            <label asp-for="student_Infos.FirstOrDefault().name"></label>
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(m=>m.Books.FirstOrDefault().Author) *@
+                            <label asp-for="student_Infos.FirstOrDefault().city"></label>
+                        </th>
+                        <th>
+                            <label asp-for="student_Infos.FirstOrDefault().course_id"></label>
+                        </th>
+                    </tr>
+                    @foreach (var item in Model.student_Infos)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m=> item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m=> item.city)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m=> item.course_id)
+                            </td>
+                            <td>
+                                <button asp-page-handler="Delete" asp-route-id="@item.student_id" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</button>
+                                <a asp-page="Edit" asp-route-id="@item.student_id" class="btn btn-success btn-sm text-white">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+            else
+            {
+                <p>No Books available.</p>
+            }
+        </form>
+    @* </div> *@
+</div>
+@section Scripts{
+    <script src="~/js/bookList.js"></script>
+}
